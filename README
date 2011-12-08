@@ -1,0 +1,116 @@
+Webex
+=====
+
+Introduction goes here.
+
+Usage
+---------------------
+General usage of the Webex Plugin is as follows:
+
+
+1. Go to https://support.webex.com/SelfServiceWeb/SelfServicePortal.portal?_nfpb=true&_pageLabel=AccSetup and then create a host.
+2. After sign up there you get webex user id or host name or user name,password, webex website or host, site id and also partner id.
+3. User should create one webex.yml file and put it in the rails application configuration folder(config).
+
+development:
+  webex_id: "webex user name"
+  password: "password"
+  site_id: "site id"
+  partner_id: "partner id"
+  host: "webex host"
+
+Example
+=======
+
+Meeting List :
+---------------------------------------
+# webex = Webex.new                           # create a webex client
+# By default it fetches all info fields.
+# m_lists = webex.list_meetings                #get the 10 meeting details information.
+
+# In view
+#    <% for m_data in m_lists %>
+#    Meeting id  :<%= m_data.id %>
+#    <% end %>
+
+# Following attributes are needed to show a meeting details
+# id
+# topic
+# type
+# host
+# timezone
+# status
+# startdate
+# duration
+# lsistStatus
+# hostJoined
+# participents
+
+Create New Meeting
+--------------------------------
+# For creating a schedule meeting following attributes are needed:
+# PW            # For password
+# MN            # For Meeting Name
+# YE            # For Year
+# MO            # For Month
+# DA            # For DAy
+# HO            # For Hour
+# MI            # For Minute
+# TL            # For Telephone no
+# CO            # For Call out
+# LF            # For List flag
+# DU            # For Duration
+
+
+# new.html.erb
+#  <%= text_field "data_set", "MN" %>
+
+# In Controller
+# @webex=Webex.new
+# meeting = @webex.create_meeting(params[data_set])
+
+Create attendee
+---------------------------------------
+#for create attendee attributes are needed
+#:meeting_id #For that particular meeting which user wants to create attendee
+#:name #the name of the attendee
+#:email #the email of the attendee
+
+#new_attendee.html.erb
+#<%= text_field_tag "meeting", :name%>
+#text_field "meeting", :name
+
+
+#in controller
+# @webex=Webex.new
+# meeting = @webex.create_meeting(params[:meeting])
+
+List of the attendee
+----------------------------------------------
+#In controller
+#webex=Webex.new
+#webex.list_meeting_attendee(meeting_id)
+or
+#list = webex.list_meeting_attendee(Meeting.first.meeting_id)
+
+#in views
+#    <% for m_data in list %>
+#    Attendee Name  :<%= list.name %>
+#    <% end %>
+
+#fields that are return for a attendee is
+
+#name
+#email
+#attendee_id
+#time_zone
+#locale
+#accepted
+#attendee_type
+#conf_id
+#phone
+#join_status
+#language
+
+
+Copyright (c) 2010 [name of plugin creator], released under the MIT license
